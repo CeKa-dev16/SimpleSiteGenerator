@@ -1,0 +1,126 @@
+---
+export interface Props {
+  group: string;
+  elements?: any;
+}
+
+const { group, elements } = Astro.props;
+---
+
+<custom-wrapper>
+  <div class="wrapper">
+    <div class="info">
+      <p>{group}</p>
+      <button title={"expand " + group} type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M5.293 9.293a1 1 0 0 1 1.414 0L12 14.586l5.293-5.293a1 1 0 1 1 1.414 1.414l-6 6a1 1 0 0 1-1.414 0l-6-6a1 1 0 0 1 0-1.414z"></path></svg>
+      </button>
+    </div>
+    <div class="content invisible">
+      {
+        elements.map(element => (
+          <div class="click" title="Click to add">
+            <element.default />  
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</custom-wrapper>
+
+<style>
+  .wrapper {
+    margin: 0 1ch 1ch 0;
+  }
+  
+  .info {
+    border-radius: 1ch;
+    background-color: var(--body);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 1ch;
+    user-select: none;
+  }
+
+  .info > p {
+    color: white;
+    font-weight: 500;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+  }
+
+  button > svg{
+    color: white;
+    position: relative;
+    top: 0;
+    transition: all .2s ease 0s;
+  }
+
+  button:hover > svg {
+    top: 2px;
+    color: var(--accent);
+  }
+
+  .rotated {
+    rotate: 180deg;
+  }
+
+  .content {
+    border-radius: 0 0 1ch 1ch;
+    padding: 1ch;
+    display: flex;
+    flex-direction: column;
+    gap: 1ch;
+  }
+  
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .click {
+    border-radius: .5ch;
+    position: relative;
+    padding: .5ch;
+  }
+
+  .click::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .click:hover {
+    outline: 3px solid var(--body);
+  }
+</style>
+
+<script>
+  import { canvas } from '../app.js';
+
+  class CustomWrapper extends HTMLElement {
+    constructor() {
+      super();
+
+      const toggle = this.querySelector("button");
+      const svg = this.querySelector("svg");
+      toggle.addEventListener("click", () => {
+        svg.classList.toggle("rotated");
+        content.classList.toggle("invisible");
+      })
+      
+      const content = this.querySelector(".content");
+      content.childNodes.forEach(child => {
+        child.addEventListener("click", () => {
+          console.log(canvas)
+          canvas.appendChild(child.firstChild.cloneNode(true));
+        })
+      })
+    }
+  }
+
+  customElements.define('custom-wrapper', CustomWrapper)
+</script>

@@ -1,0 +1,83 @@
+---
+
+---
+
+<my-configs>
+  <div>
+    <button id="full" type="button" title="Full preview">Full preview</button>
+    <button id="move" type="button" title="Switch menu">Move to bottom</button>
+    <button id="copy" type="button" title="Copy code">Copy code</button>
+    <button id="reset" type="button" title="Reset focus">Reset focus</button>
+  </div>
+</my-configs>
+
+<style>
+  div {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    gap: 1ch;
+  }
+
+  button {
+    flex: 1;
+    background-color: var(--body);
+    border-radius: 1ch;
+    height: 2rem;
+    border: none;
+    font-weight: 600;
+    color: white;
+    user-select: none;
+    cursor: pointer;
+    transition: all .2s;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+  }
+
+  button:hover {
+    background-color: var(--accent);
+  }
+</style>
+
+<script>
+  import { setCanvasTo, main, canvas, original_canvas } from '../app.js';
+
+  class MyConfigs extends HTMLElement {
+    constructor() {
+      super();
+
+      const move = this.querySelector('#move');
+      main.classList.contains('to-bottom') ? move.innerHTML = "Move to top" : move.innerHTML = "Move to bottom";
+      move.addEventListener('click', () => {
+        main.classList.toggle('to-bottom');
+        document.querySelector('body').classList.toggle('overflow');
+        move.innerHTML == "Move to top" ? move.innerHTML = "Move to bottom" : move.innerHTML = "Move to top";
+        window.scrollTo(0,0);
+      })
+
+      const full = this.querySelector('#full');
+      full.addEventListener('click', () => {
+        main.classList.toggle('fullscreen')
+        document.querySelector('.exit').classList.toggle('invisible')
+      })
+
+      const copy = this.querySelector('#copy');
+      copy.addEventListener('click', async () => {
+        let text = canvas.innerHTML;
+        try {
+          await navigator.clipboard.writeText(text);
+          alert("¡HTML Copiado con exito!");
+        } catch (err) {
+          alert("Ha ocurrido un error :(");
+          throw(err)
+        }
+      })
+
+      const reset = this.querySelector('#reset');
+      reset.addEventListener('click', () => {
+        setCanvasTo(original_canvas);
+      })
+    }
+  }
+  
+  customElements.define('my-configs', MyConfigs);
+</script>
