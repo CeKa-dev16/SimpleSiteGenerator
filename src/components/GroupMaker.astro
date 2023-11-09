@@ -82,6 +82,7 @@ const { group, elements } = Astro.props;
     border-radius: .5ch;
     position: relative;
     padding: .5ch;
+    outline: 1px solid var(--body);
   }
 
   .click::after {
@@ -115,7 +116,6 @@ const { group, elements } = Astro.props;
       const content = this.querySelector(".content");
       content.childNodes.forEach(child => {
         child.addEventListener("click", () => {
-          console.log(canvas)
           canvas.appendChild(child.firstChild.cloneNode(true));
         })
       })

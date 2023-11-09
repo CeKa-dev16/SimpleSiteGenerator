@@ -39,7 +39,7 @@
 </style>
 
 <script>
-  import { setCanvasTo, main, canvas, original_canvas } from '../app.js';
+  import { setCanvasTo, main, canvas, original_canvas, desactivateEvents } from '../app.js';
 
   class MyConfigs extends HTMLElement {
     constructor() {
@@ -56,18 +56,25 @@
 
       const full = this.querySelector('#full');
       full.addEventListener('click', () => {
-        main.classList.toggle('fullscreen')
-        document.querySelector('.exit').classList.toggle('invisible')
+        main.classList.toggle('fullscreen');
+        document.querySelector('.exit').classList.toggle('invisible');
+        desactivateEvents();
       })
 
       const copy = this.querySelector('#copy');
-      copy.addEventListener('click', async () => {
+      copy.addEventListener('click', async (e) => {
         let text = canvas.innerHTML;
         try {
           await navigator.clipboard.writeText(text);
-          alert("¡HTML Copiado con exito!");
+          copy.style.backgroundColor = 'green';
+          setTimeout(() => {
+            copy.style.backgroundColor = '';
+          }, 500)
         } catch (err) {
-          alert("Ha ocurrido un error :(");
+          copy.style.backgroundColor = 'red';
+          setTimeout(() => {
+            copy.style.backgroundColor = '';
+          }, 500)
           throw(err)
         }
       })

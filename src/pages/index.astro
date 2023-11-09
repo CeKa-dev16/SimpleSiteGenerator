@@ -10,6 +10,7 @@ import Configs from "../components/Configs.astro"
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content="This is my simple site generator like wix but with simple CODE COPY">
 		<title>Astro</title>	
 	</head>
 	<body>
@@ -124,16 +125,18 @@ import Configs from "../components/Configs.astro"
 </style>
 
 <script>
-	import { setCanvasTo, main, original_canvas } from '../app.js';
+	import { setCanvasTo, main, original_canvas, activateEvents } from '../app.js';
+	activateEvents();
 
 	if ( window.innerWidth < 1400 ) {
-		main.classList.toggle('to-bottom')
+		main.classList.toggle('to-bottom');
 		document.querySelector('body').classList.toggle('overflow');
 	}
 
 	document.querySelector('.exit').addEventListener("click", () => {
-		main.classList.toggle('fullscreen')
-		document.querySelector('.exit').classList.toggle('invisible')
+		main.classList.toggle('fullscreen');
+		document.querySelector('.exit').classList.toggle('invisible');
+		activateEvents();
 	})
 
 	original_canvas.addEventListener('click', (e) => {
