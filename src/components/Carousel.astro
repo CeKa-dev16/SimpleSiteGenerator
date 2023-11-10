@@ -3,9 +3,18 @@ import GroupMaker from "./GroupMaker.astro";
 ---
 
 <div class="carousel">
-  <GroupMaker group="Navbars" elements={ await Astro.glob("./custom/navbars/*.astro") }/>
-  <GroupMaker group="Heros" elements={ await Astro.glob("./custom/heros/*.astro") }/>
-  <GroupMaker group="Footers" elements={ await Astro.glob("./custom/footers/*.astro") }/>
+  <GroupMaker
+    group="Navbars"
+    elements={await Astro.glob("./custom/navbars/*.astro")}
+  />
+  <GroupMaker
+    group="Heros"
+    elements={await Astro.glob("./custom/heros/*.astro")}
+  />
+  <GroupMaker
+    group="Footers"
+    elements={await Astro.glob("./custom/footers/*.astro")}
+  />
 </div>
 
 <style>
@@ -27,6 +36,6 @@ import GroupMaker from "./GroupMaker.astro";
   .carousel::-webkit-scrollbar-thumb {
     border-radius: 5px;
     background-color: var(--body);
-    transition: all .2s;
+    transition: all 0.2s;
   }
 </style>

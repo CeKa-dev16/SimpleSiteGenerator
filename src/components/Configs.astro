@@ -6,9 +6,8 @@
   <div>
     <button id="full" type="button" title="Full preview">Full preview</button>
     <button id="move" type="button" title="Switch menu">Move to bottom</button>
-    <button id="copy" type="button" title="Copy code">Copy code</button>
+    <button id="copy" type="button" title="Copy code">Copy image</button>
     <button id="reset" type="button" title="Reset focus">Reset focus</button>
-  </div>
 </my-configs>
 
 <style>
@@ -29,8 +28,8 @@
     color: white;
     user-select: none;
     cursor: pointer;
-    transition: all .2s;
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+    transition: all 0.2s;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
   }
 
   button:hover {
@@ -39,52 +38,59 @@
 </style>
 
 <script>
-  import { setCanvasTo, main, canvas, original_canvas, desactivateEvents } from '../app.js';
+  import {
+    setCanvasTo,
+    main,
+    // ownCanvas,
+    original_canvas,
+    desactivateEvents,
+  } from "../app.js";
+
+  import html2canvas from "html2canvas";
 
   class MyConfigs extends HTMLElement {
     constructor() {
       super();
 
-      const move = this.querySelector('#move');
-      main.classList.contains('to-bottom') ? move.innerHTML = "Move to top" : move.innerHTML = "Move to bottom";
-      move.addEventListener('click', () => {
-        main.classList.toggle('to-bottom');
-        document.querySelector('body').classList.toggle('overflow');
-        move.innerHTML == "Move to top" ? move.innerHTML = "Move to bottom" : move.innerHTML = "Move to top";
-        window.scrollTo(0,0);
-      })
+      const move = this.querySelector("#move");
+      main.classList.contains("to-bottom")
+        ? (move.innerHTML = "Move to top")
+        : (move.innerHTML = "Move to bottom");
+      move.addEventListener("click", () => {
+        main.classList.toggle("to-bottom");
+        document.querySelector("body").classList.toggle("overflow");
+        move.innerHTML == "Move to top"
+          ? (move.innerHTML = "Move to bottom")
+          : (move.innerHTML = "Move to top");
+        window.scrollTo(0, 0);
+      });
 
-      const full = this.querySelector('#full');
-      full.addEventListener('click', () => {
-        main.classList.toggle('fullscreen');
-        document.querySelector('.exit').classList.toggle('invisible');
+      const full = this.querySelector("#full");
+      full.addEventListener("click", () => {
+        main.classList.toggle("fullscreen");
+        document.querySelector(".exit").classList.toggle("invisible");
         desactivateEvents();
-      })
+      });
 
-      const copy = this.querySelector('#copy');
-      copy.addEventListener('click', async (e) => {
-        let text = canvas.innerHTML;
-        try {
-          await navigator.clipboard.writeText(text);
-          copy.style.backgroundColor = 'green';
-          setTimeout(() => {
-            copy.style.backgroundColor = '';
-          }, 500)
-        } catch (err) {
-          copy.style.backgroundColor = 'red';
-          setTimeout(() => {
-            copy.style.backgroundColor = '';
-          }, 500)
-          throw(err)
-        }
-      })
+      const copy = this.querySelector("#copy");
+      copy.addEventListener("click", () => {
+        let width = Number(prompt('Resolución (en pixeles)'));
+        html2canvas(document.querySelector("#canvas"), {
+          windowWidth: width
+        }).then((canvas) => {
+          let link = document.createElement('a');
+          link.download = "Canvas como imagen.png";
+          link.href = canvas.toDataURL();
+          link.click();
+        });
+      });
 
-      const reset = this.querySelector('#reset');
-      reset.addEventListener('click', () => {
+      const reset = this.querySelector("#reset");
+      reset.addEventListener("click", () => {
         setCanvasTo(original_canvas);
-      })
+      });
     }
   }
-  
-  customElements.define('my-configs', MyConfigs);
+
+  customElements.define("my-configs", MyConfigs);
 </script>

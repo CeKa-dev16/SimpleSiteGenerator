@@ -1,145 +1,154 @@
 ---
 import "../styles/global.css";
 import Carousel from "../components/Carousel.astro";
-import Configs from "../components/Configs.astro"
+import Configs from "../components/Configs.astro";
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content="This is my simple site generator like wix but with simple CODE COPY">
-		<title>Astro</title>	
-	</head>
-	<body>
-		<main>
-			<div class="canvas">
-				<div id="canvas"></div>
-				<div class="exit invisible">
-					<button title="Exit fullscreen" type="button">Exit fullscreen</button>
-				</div>
-			</div>
-			<aside>
-				<Configs />
-				<Carousel />
-			</aside>
-		</main>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta
+      name="description"
+      content="This is my simple site generator like wix but with simple CODE COPY"
+    />
+    <title>Astro</title>
+  </head>
+  <body>
+    <main>
+      <div class="canvas">
+        <div id="canvas"></div>
+        <div class="exit invisible">
+          <button title="Exit fullscreen" type="button">Exit fullscreen</button>
+        </div>
+      </div>
+      <aside>
+        <Configs />
+        <Carousel />
+      </aside>
+    </main>
+  </body>
 </html>
 
 <style>
-	body {
-		background-color: var(--white);
-		overflow: hidden;
-	}
+  body {
+    background-color: var(--white);
+    overflow: hidden;
+  }
 
-	.overflow {
-		overflow-y: scroll;
-	}
-	
-	main {
-		height: 100vh;
-		display: flex;
-		padding: 1ch;
-		gap: 1ch;
-	}
-	
-	.canvas {
-		flex: 1.5;
+  .overflow {
+    overflow-y: scroll;
+  }
+
+  main {
+    height: 100vh;
+    display: flex;
+    padding: 1ch;
+    gap: 1ch;
+  }
+
+  .canvas {
+    flex: 1.5;
     background-color: white;
     border-radius: 1ch;
-		overflow: auto;
-		min-height: 100%;
-		box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
-		-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
-		-moz-box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.5);
-	}
-	
-	#canvas {
-		position: relative;
-	}
+    overflow: auto;
+    min-height: 100%;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.5);
+  }
 
-	aside {
-		background-color: white;
-		border-radius: 1ch;
-		padding: 1ch;
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		gap: 2ch;
-		box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
-		-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
-		-moz-box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.5);
-	}
+  #canvas {
+    position: relative;
+  }
 
-	.to-bottom {
-		flex-direction: column;
-	}
+  aside {
+    background-color: white;
+    border-radius: 1ch;
+    padding: 1ch;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2ch;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.5);
+  }
 
-	.fullscreen {
-		padding: 0;
-		gap: 0;
-	}
+  .to-bottom {
+    flex-direction: column;
+  }
 
-	.fullscreen > :not(:first-child) {
-		display: none;
-	}
+  .fullscreen {
+    padding: 0;
+    gap: 0;
+  }
 
-	.exit {
-		position: absolute;
-		top: 0;
-		right: 0;
-		margin: 1ch;
-		filter: opacity(.5);
-		transition: all .2s;
-	}
+  .fullscreen > :not(:first-child) {
+    display: none;
+  }
 
-	.exit:hover {
-		filter: opacity(1);
-	}
+  .exit {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 1ch;
+    filter: opacity(0.5);
+    transition: all 0.2s;
+  }
 
-	.exit > button {
-		position: relative;
-		top: 0;
-		background-color: var(--body);
-		border-radius: 1ch;
-		height: 2rem;
-		border: none;
-		font-weight: 600;
-		color: white;
-		user-select: none;
-		padding-inline: 2ch;
-		z-index: 100;
-	}
+  .exit:hover {
+    filter: opacity(1);
+  }
 
-	.exit:hover > button {
-		background-color: var(--accent);
-		top: 5px;
-	}
+  .exit > button {
+    position: relative;
+    top: 0;
+    background-color: var(--body);
+    border-radius: 1ch;
+    height: 2rem;
+    border: none;
+    font-weight: 600;
+    color: white;
+    user-select: none;
+    padding-inline: 2ch;
+    z-index: 100;
+    transition: all 0.2s;
+  }
 
-	#canvas * {
-		pointer-events: none;
-	}
+  .exit:hover > button {
+    background-color: var(--accent);
+    top: 5px;
+  }
+
+  #canvas * {
+    pointer-events: none;
+  }
 </style>
 
-<script>
-	import { setCanvasTo, main, original_canvas, activateEvents } from '../app.js';
-	activateEvents();
+<script >
+  import {
+    setCanvasTo,
+    main,
+    original_canvas,
+    activateEvents,
+  } from "../app.js";
+  activateEvents();
 
-	if ( window.innerWidth < 1400 ) {
-		main.classList.toggle('to-bottom');
-		document.querySelector('body').classList.toggle('overflow');
-	}
+  if (window.innerWidth < 1400) {
+    main.classList.toggle("to-bottom");
+    document.querySelector("body").classList.toggle("overflow");
+  }
 
-	document.querySelector('.exit').addEventListener("click", () => {
-		main.classList.toggle('fullscreen');
-		document.querySelector('.exit').classList.toggle('invisible');
-		activateEvents();
-	})
+  document.querySelector(".exit").addEventListener("click", () => {
+    main.classList.toggle("fullscreen");
+    document.querySelector(".exit").classList.toggle("invisible");
+    activateEvents();
+  });
 
-	original_canvas.addEventListener('click', (e) => {
-		setCanvasTo(document.elementFromPoint(e.x, e.y));
-	})
+  original_canvas.addEventListener("click", (e: Event) => {
+    setCanvasTo(document.elementFromPoint(e.x, e.y));
+  });
 </script>
